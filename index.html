@@ -20,24 +20,56 @@
         <input type="text" placeholder="Имя" id="user_name">
         <input type="text" placeholder="Email" id="user_email">
         <input type="text" placeholder="Телефон" id="user_phone">
+        <div id = "error"></div>
         <button id = "order">Оформить</button>
     </form>
 
-    <script src = "https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let TG = window.Telegram.WebApp;
         let buy = document.getElementById("buy");
         let order = document.getElementById("order");
+        TG.expand();
 
         buy.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
-            document.getElementById("user_name").value = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name;
-        })
+            document.getElementById("user_name").value = TG.initDataUnsafe.user.first_name + " " + TG.initDataUnsafe.user.last_name;
+        });
 
         order.addEventListener("click", () => {
-            tg.close();
-        })
+            document.getElementById("error").innerText = "";
+            let name = document.getElementById("user_name").value;
+            let email = document.getElementById("user_email").value;
+            let phone = document.getElementById("user_phone").value;
+
+            if(name.lenght = 0)
+            {
+                document.getElementById("error").innerText = "Введите имя";
+                return;
+            }
+
+            if(email.lenght = 0)
+            {
+                document.getElementById("error").innerText = "Введите email";
+                return;
+            }
+
+            if(phone.lenght < 10)
+            {
+                document.getElementById("error").innerText = "Неверно введен номер телефона";
+                return;
+            }
+
+            let data = {
+                name:name,
+                email:email,
+                phone:phone
+            }
+            TG.sendData(JSON.stringify(data));
+
+            TG.close();
+        });
     </script>
 </body>
 </html>
