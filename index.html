@@ -18,7 +18,7 @@
 
     <form id = "form">
         <input type="text" placeholder="Имя" id="user_name">
-        <input type="text" placeholder="Email" id="user_email">
+        <input type="text" placeholder="Адрес" id="user_adres">
         <input type="text" placeholder="Телефон" id="user_phone">
         <div id = "error"></div>
         <button id = "order">Оформить</button>
@@ -40,16 +40,16 @@
         order.addEventListener("click", () => {
             document.getElementById("error").innerText = "";
             let name = document.getElementById("user_name").value;
-            let email = document.getElementById("user_email").value;
+            let adress = document.getElementById("user_adres").value;
             let phone = document.getElementById("user_phone").value;
             if(name.length == 0)
             {
                 document.getElementById("error").innerText = "Введите имя";
                 return;
             }
-            if(email.length == 0)
+            if(adres.length == 0)
             {
-                document.getElementById("error").innerText = "Введите email";
+                document.getElementById("error").innerText = "Введите адрес";
                 return;
             }
             if(phone.length < 10)
@@ -59,7 +59,7 @@
             }
             let data = {
                 name:name,
-                email:email,
+                adres:adres,
                 phone:phone
             }
             TG.sendData(JSON.stringify(data));
